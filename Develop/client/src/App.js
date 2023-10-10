@@ -12,6 +12,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    //IGNORE PREVIOUS COMMIT, THE TITLE DOESNT REFLECT THE CHANGES, THIS ONE DOES
     <ApolloProvider client={client}>
     <Router>
       <>
@@ -24,6 +25,7 @@ function App() {
       </>
     </Router>
     </ApolloProvider>
+    //IGNORE PREVIOUS COMMIT, THE TITLE DOESNT REFLECT THE CHANGES, THIS ONE DOES
   );
 }
 
