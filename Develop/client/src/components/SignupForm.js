@@ -8,7 +8,7 @@ const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
@@ -27,26 +27,27 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
+    setValidated(true);
+
     try {
-      const response = await createUser(userFormData);
+      if (form.checkValidity()) { // Check form validity again before submitting
+        const response = await createUser(userFormData);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+        if (!response.ok) {
+          throw new Error('Something went wrong!');
+        }
+
+        const { token, user } = await response.json();
+        console.log(user);
+        Auth.login(token);
+
+        setUserFormData({ username: '', email: '', password: '' });
+        setValidated(false); // Reset validated state to false after successful form submission
       }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
-
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
   };
 
   return (
